@@ -16,3 +16,6 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::apiResource('categories', 'Api\CategoryController')->middleware('auth.basic.once');
+Route::apiResource('categories.products', 'Api\ProductController')->middleware('auth.basic.once');
