@@ -1,78 +1,77 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+# giftano-product
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+### Installation
+1. Set up your web & database server.
+3. Clone this repo to your server / local machine.
+```
+git clone https://github.com/ahrezaldy/giftano-product.git
+```
+3. Execute
+```
+Composer install
+```
+4. Rename file `.env.example` to `.env` and edit based on your server setting.
+```
+. . .
+APP_URL=http://localhost:8000
+. . .
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=giftano
+DB_USERNAME=giftano
+DB_PASSWORD=giftano
+. . .
+```
+6. Execute
+```
+php artisan migrate:refresh --seed
+```
+7. (Optional) Execute
+```
+php artisan serve
+```
+if no web server provided. If this step is done, base URL will be `http://localhost:8000`
 
-## About Laravel
+### User & Auth
+I provide default user:
+```
+email: admin@email.com
+name: admin
+password: password
+```
+The API require `Basic Auth` method. To access available API, use provided `email` & `password` above.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Endpoint
+1. GET /api/categories
+- Endpoint to get all categories.
+- Categories have order, thus this endpoint by default return categories sorted by order.
+- Support sort by id / name / order (?sort_by=...).
+2. GET /api/categories/{id}
+- Endpoint to get one category detail.
+3. POST /api/categories
+- Endpoint to create one new category. Required fields: `name`, `order`.
+4. PUT /api/categories/{id} or PATCH /categories/{id}
+- Endpoint to update some/all field(s) of one category. Available fields: `name`, `order`.
+5. DELETE /api/categories/{id}
+- Endpoint to delete one room.
+6. GET /api/categories/{catId}/products
+- Endpoint to get all products in category with id = {catId}.
+7. GET /api/categories/{catId}/products/{id}
+- Endpoint to get one product detail.
+- Make sure that the product listed in category with id = {catId}.
+8. POST /api/categories/{catId}/products
+- Endpoint to create one new product in category with id = {catId}. Required fields: `name`.
+9. PUT /api/categories/{catId}/products/{id} or PATCH /categories/{catId}/products
+- Endpoint to update `name` field of one product.
+- Make sure that the product listed in category with id = {catId}.
+10. DELETE /api/categories/{catId}/products
+- Endpoint to delete one product.
+- Make sure that the product listed in category with id = {catId}.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Functional Test
+1. Execute
+```
+phpunit
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Time to Finish: ~5 hours
