@@ -4,10 +4,18 @@ namespace App\Http\Controllers\Api;
 
 use App\Category;
 use App\Http\Controllers\Controller;
+use App\Repository\ProductCategoryRepositoryInterface;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    private $repo;
+
+    public function __construct(ProductCategoryRepositoryInterface $repo)
+    {
+        $this->repo = $repo;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +27,7 @@ class CategoryController extends Controller
         if ($request->has('sort_by') && in_array($request->sort_by, ['id', 'name', 'order'])) {
             $order = $request->sort_by;
         }
-        return Category::orderBy($order)->get();
+        return $this->repo->getCategoryList($order);
     }
 
     /**

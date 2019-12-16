@@ -2,13 +2,21 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Category;
+use App\Http\Controllers\Controller;
 use App\Product;
+use App\Repository\ProductCategoryRepositoryInterface;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    private $repo;
+
+    public function __construct(ProductCategoryRepositoryInterface $repo)
+    {
+        $this->repo = $repo;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +24,7 @@ class ProductController extends Controller
      */
     public function index(Category $category)
     {
-        return Product::where('category_id', $category->id)->get();
+        return $this->repo->getProductByCategory($category);
     }
 
     /**
